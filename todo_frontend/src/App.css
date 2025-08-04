@@ -3,101 +3,168 @@
   --primary: #1976d2;
   --secondary: #424242;
   --accent: #ff9800;
+
+  /* Glassmorphism Core */
+  --glass-bg: rgba(255, 255, 255, 0.20);
+  --glass-blur: 18px;
+  --glass-border: rgba(255,255,255,0.29);
+
   /* Modern minimal background/text */
-  --bg-primary: #fafbfc;
-  --bg-secondary: #fff;
-  --todo-border: #e0e2e7;
-  --todo-muted: #f3f4f8;
-  --shadow: 0 2px 12px 0 rgba(63,82,100,.08);
-  --text-primary: #252525;
-  --text-secondary: #8898aa;
+  --bg-primary: linear-gradient(135deg, #e0e7ff 0%, #fafafa 100%);
+  --bg-secondary: rgba(255,255,255,0.13);
+
+  --todo-border: rgba(255,255,255,0.22);
+  --todo-muted: rgba(200,222,250,0.18);
+
+  --shadow: 0 4px 40px 0 rgba(31,70,175,0.14);
+  --glass-shadow: 0 6px 32px 0 rgba(25, 118, 210, 0.08), 0 0.5px 2.5px 0 rgba(255,255,255,0.16);
+
+  --text-primary: #222b3a;
+  --text-secondary: rgba(33, 44, 77, 0.54);
   --todo-done: #bdbdbd;
 }
 
+body {
+  /* Give the root body a glass backdrop-like effect */
+  background: var(--bg-primary);
+  min-height: 100vh;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* Root app glass container */
 .App {
   min-height: 100vh;
-  background-color: var(--bg-primary);
+  background: var(--bg-primary);
   color: var(--text-primary);
   transition: background 0.3s, color 0.3s;
   font-family: 'Inter', sans-serif;
-  /* for mobile safe area */
   padding-bottom: env(safe-area-inset-bottom, 24px);
+  backdrop-filter: blur(0.5px);
+  /* subtle global blur */
 }
 
 /* Header ------------------------------------------------------ */
 .todo-header {
-  background: var(--bg-secondary);
-  border-bottom: 1.5px solid var(--todo-border);
+  background: var(--glass-bg);
+  border-bottom: 2px solid var(--glass-border);
+  box-shadow: 0 2px 14px 0 rgba(25, 118, 210, 0.06);
   padding-top: 3.5rem;
   padding-bottom: 2rem;
+  margin-bottom: 1.3rem;
   text-align: center;
+  border-radius: 0 0 2.4rem 2.4rem;
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+  position: relative;
 }
+.todo-header::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 30%;
+  right: 30%;
+  bottom: 0;
+  height: 1.5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  opacity: 0.18;
+}
+
 .todo-title {
-  font-size: 2.4rem;
-  font-weight: 700;
+  font-size: 2.5rem;
+  font-weight: 800;
   color: var(--primary);
-  letter-spacing: -1px;
+  letter-spacing: -1.5px;
   margin: 0;
+  text-shadow: 0 4px 16px rgba(25, 118, 210, 0.10),0 1px 0 rgba(255,255,255,0.3);
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .todo-subtitle {
-  color: var(--secondary);
+  color: var(--text-secondary);
   letter-spacing: 0.05em;
-  font-size: 1.1rem;
-  margin-top: 0.4rem;
-  opacity: 0.7;
+  font-size: 1.15rem;
+  margin-top: 0.7rem;
+  opacity: 0.93;
   font-weight: 400;
+  text-shadow: 0 1.5px 7px rgba(87, 144, 245, 0.09);
 }
 
 /* Main Layout ----------------------------------------------- */
 .todo-main {
-  max-width: 410px;
+  max-width: 435px;
   margin: 2.5rem auto 0 auto;
-  background: transparent;
+  background: var(--glass-bg);
+  border-radius: 1.9rem;
+  box-shadow: var(--glass-shadow);
+  padding: 2.2rem 2.0rem 1.6rem 2.0rem;
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1.7px solid var(--glass-border);
+  position: relative;
+  z-index: 2;
 }
 
 .todo-add-form {
   display: flex;
   align-items: stretch;
-  gap: 0.6rem;
+  gap: 0.7rem;
   margin-bottom: 2.3rem;
+  background: var(--glass-bg);
+  border-radius: 1.5rem;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  padding: 0.45rem 0.65rem 0.45rem 0.9rem;
+  box-shadow: 0 2px 12px rgba(60, 99, 180, 0.08);
+  border: 1.2px solid var(--glass-border);
 }
 
 .todo-input {
   flex: 1 1 auto;
-  padding: 0.95em 1em;
+  padding: 0.96em 1em;
   font-size: 1.09rem;
   border: 1.5px solid var(--primary);
-  border-radius: 8px;
-  background: var(--bg-secondary);
+  border-radius: 11px;
+  background: rgba(255,255,255,0.45);
   color: var(--text-primary);
   outline: none;
-  box-shadow: none;
-  transition: border 0.15s;
+  box-shadow: 0 3px 16px rgba(77, 112, 197, 0.10);
+  transition: border 0.15s, background 0.23s;
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  font-weight: 500;
 }
-
 .todo-input:focus {
   border-color: var(--accent);
+  background: rgba(246, 250, 254, 0.72);
 }
 
 .todo-add-btn {
-  background: var(--primary);
+  background: linear-gradient(108deg, var(--primary) 90%, var(--accent));
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 0 1.07em;
-  font-size: 1.40rem;
+  border-radius: 10px;
+  padding: 0 1.1em;
+  font-size: 1.43rem;
   font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s, opacity 0.2s;
-  box-shadow: 0 1px 6px rgba(25, 118, 210, 0.07);
+  transition: background 0.19s, opacity 0.20s, box-shadow 0.13s;
+  box-shadow: 0 2px 10px rgba(25, 118, 210, 0.13);
   display: flex;
   align-items: center;
   justify-content: center;
+  outline: none;
+  border: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 .todo-add-btn:disabled {
-  background: #c1c9d6;
+  background: #a8b9d5;
   color: #fff;
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
@@ -114,85 +181,153 @@
   font-size: 1.11rem;
   text-align: center;
   margin-top: 2rem;
-  opacity: 0.7;
-  padding: 1.8rem 0;
+  opacity: 0.72;
+  padding: 2.1rem 0 1.6rem 0;
+  border-radius: 1.3rem;
+  background: rgba(255,255,255,0.20);
+  border: 1.5px solid var(--glass-border);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .todo-item {
-  background: var(--bg-secondary);
-  border: 1px solid var(--todo-border);
-  border-radius: 11px;
-  margin-bottom: 1rem;
-  box-shadow: var(--shadow);
+  background: var(--glass-bg);
+  border: 1.5px solid var(--glass-border);
+  border-radius: 15px;
+  margin-bottom: 1.13rem;
+  box-shadow: 0 1.5px 20px 0 rgba(74, 120, 184, 0.12), var(--glass-shadow);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.85em 1.1em 0.87em 0.93em;
-  transition: box-shadow 0.13s;
+  padding: 0.95em 1.2em 1.1em 1em;
+  transition: box-shadow 0.10s, border 0.16s, background 0.21s;
   gap: 1rem;
+  -webkit-backdrop-filter: blur(13px);
+  backdrop-filter: blur(13px);
+  position: relative;
+  z-index: 1;
+  min-height: 54px;
+}
+.todo-item::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 3px; left: 6px; right: 6px; bottom: 3px;
+  border-radius: 12px;
+  background: linear-gradient(93deg, rgba(25, 118, 210, 0.03), rgba(255, 152, 0, 0.05));
+  z-index: 0;
+}
+.todo-item .todo-left, .todo-item .todo-actions {
+  position: relative;
+  z-index: 2;
+}
+.todo-item.completed {
+  background: rgba(231,237,240,0.36);
+  border-color: #bbccea;
+  opacity: 0.92;
 }
 .todo-item.completed .todo-title-text {
   color: var(--todo-done);
   text-decoration: line-through;
-  opacity: 0.7;
+  opacity: 0.75;
 }
 .todo-item.editing {
-  background: #f3f7fb;
-  border-color: var(--primary);
+  background: rgba(246, 255, 234,0.38);
+  border-color: var(--accent);
+  box-shadow: 0 2px 13px 0 rgba(255, 152, 0, 0.19), var(--glass-shadow);
 }
 .todo-left {
   flex: 1 1 auto;
   display: flex;
   align-items: center;
-  gap: 1.1em;
+  gap: 1.05em;
 }
 .todo-checkbox {
-  width: 1.18em;
-  height: 1.18em;
+  width: 1.22em;
+  height: 1.22em;
   cursor: pointer;
+  accent-color: var(--accent);
+  box-shadow: 0 0 4px #b9d3f2;
+  border-radius: 5px;
+  background: rgba(255,255,255,0.49);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  border: 1.1px solid #e5ecfa;
 }
 .todo-title-text {
-  font-size: 1.11rem;
+  font-size: 1.12rem;
   font-weight: 500;
   cursor: pointer;
   transition: color 0.14s;
   user-select: text;
-  letter-spacing: 0.011em;
+  letter-spacing: 0.012em;
+  color: var(--text-primary);
+  text-shadow: 0 1px 6px rgba(87, 144, 245, 0.09);
+  border-radius: 6px;
+  padding: 0.16em 0.39em;
+  background: rgba(245,245,255,0.12);
+  border: 1px solid transparent;
+}
+
+.todo-title-text:hover:not(.completed) {
+  background: rgba(255,255,255,0.23);
+  border: 1px solid var(--accent);
+  color: var(--accent);
 }
 
 /* Edit mode */
 .todo-edit-form {
   display: flex;
   align-items: center;
-  gap: 0.35em;
+  gap: 0.34em;
+  background: none;
 }
 
 .todo-edit-input {
-  padding: 0.35em 0.85em;
-  font-size: 1.08rem;
+  padding: 0.39em 1em;
+  font-size: 1.09rem;
   border: 1.5px solid var(--primary);
-  border-radius: 7px;
+  border-radius: 9px;
   outline: none;
-  background: #fff;
+  background: rgba(255,255,255,0.61);
   color: var(--text-primary);
-  min-width: 150px;
+  min-width: 145px;
+  font-weight: 500;
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  box-shadow: 0 1px 8px rgba(77, 112, 197, 0.10);
+  transition: border 0.14s, background 0.13s;
+}
+.todo-edit-input:focus {
+  border-color: var(--accent);
+  background: rgba(246,250,254,0.62);
 }
 .todo-save-btn,
 .todo-cancel-btn {
-  background: none;
-  border: none;
+  background: var(--glass-bg);
+  border: 1.1px solid var(--glass-border);
   font-size: 1.1em;
   cursor: pointer;
   line-height: 1.6;
-  padding: 0.16em 0.48em;
-  border-radius: 4px;
-  transition: background 0.13s;
+  padding: 0.17em 0.52em;
+  border-radius: 6px;
+  transition: background 0.11s, box-shadow 0.11s, color 0.15s;
+  color: var(--primary);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  margin-left: 0.23em;
+  margin-right: 0.09em;
+  box-shadow: 0 3px 8px rgba(44,82,191,0.10);
 }
 .todo-save-btn:hover {
-  background: #e3f2fd;
+  background: rgba(38, 165, 98, 0.15);
+  color: var(--accent);
+  border-color: var(--accent);
 }
 .todo-cancel-btn:hover {
-  background: #fbe9e7;
+  background: rgba(255, 152, 0, 0.11);
+  color: #b45716;
+  border-color: var(--accent);
 }
 
 /* Todo Actions (edit/delete) */
@@ -201,16 +336,21 @@
   gap: 0.3em;
 }
 .todo-action-btn {
-  background: none;
-  border: none;
+  background: var(--glass-bg);
+  border: 1.1px solid var(--glass-border);
   font-size: 1.13em;
-  padding: 0.12em 0.38em;
-  border-radius: 5px;
+  padding: 0.17em 0.44em;
+  border-radius: 7px;
   cursor: pointer;
-  transition: background 0.15s, color 0.20s;
+  transition: background 0.15s, color 0.20s, box-shadow 0.1s;
+  color: var(--accent);
+  outline: none;
+  box-shadow: 0 2px 8px rgba(74, 120, 184, 0.03);
 }
 .todo-action-btn:hover {
-  background: #f5f5f5;
+  background: rgba(255, 243, 224, 0.13);
+  color: var(--primary);
+  border-color: var(--accent);
 }
 
 /* Footer ---------------------------------------------------- */
@@ -219,17 +359,33 @@
   margin-top: 4.5rem;
   padding-bottom: 1rem;
   color: var(--text-secondary);
-  font-size: 1.01rem;
-  opacity: 0.7;
+  font-size: 1.03rem;
+  opacity: 0.83;
+  background: rgba(255,255,255,0.11);
+  border-top: 1.1px solid var(--glass-border);
+  box-shadow: 0 3px 18px 0 rgba(200,220,240,0.08) inset;
+  border-radius: 0 0 16px 16px;
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
 }
 .footer-text {
-  color: var(--text-secondary)
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+/* Extra accent effect for the app's accent color (e.g. on focused input/btn) */
+.glass-accent {
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Responsive design for mobile */
 @media (max-width: 620px) {
   .todo-main {
-    max-width: 97%;
+    max-width: 98vw;
+    padding: 1.4rem 0.4rem 1.1rem 0.4rem;
   }
   .todo-header {
     padding-top: 2.2rem;
